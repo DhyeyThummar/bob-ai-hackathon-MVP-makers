@@ -1,0 +1,32 @@
+.appShell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Mobile: single column with tabs */
+@media (max-width: 767px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+
+  .mobileHide {
+    display: none;
+  }
+}
+
+/* Desktop: always show both panes */
+@media (min-width: 768px) {
+  .tabBar {
+    display: none;
+  }
+}

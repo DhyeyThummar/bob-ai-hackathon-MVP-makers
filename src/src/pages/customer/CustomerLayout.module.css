@@ -1,0 +1,101 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header {
+  height: var(--header-height);
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 16px;
+  flex-shrink: 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brandIcon { font-size: 20px; }
+.brandName {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.nav {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+
+.navLink {
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: background 0.12s, color 0.12s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navLink:hover {
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.navLink.active {
+  background: var(--color-surface);
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+.badge {
+  background: var(--color-accent);
+  color: white;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  padding: 1px 5px;
+  font-weight: 700;
+}
+
+.switchBtn {
+  padding: 5px 10px;
+  font-size: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.switchBtn:hover {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.main {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* React Router <Outlet> renders a div — make sure it fills the main area */
+.main > * {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}

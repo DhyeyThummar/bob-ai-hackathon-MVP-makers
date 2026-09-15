@@ -1,0 +1,105 @@
+.landing {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background: var(--color-surface);
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logoMark {
+  font-size: 56px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.tagline {
+  font-size: 16px;
+  color: var(--color-muted);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.roleCards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 480px;
+}
+
+.roleCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--color-border);
+  background: var(--color-bg);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.roleCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.customer:hover {
+  border-color: var(--color-accent);
+}
+
+.shopkeeper:hover {
+  border-color: var(--color-secondary);
+}
+
+.roleIcon {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.roleInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.roleTitle {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.roleDesc {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.4;
+}
+
+.roleArrow {
+  font-size: 20px;
+  color: var(--color-muted);
+  flex-shrink: 0;
+}
+
+.disclaimer {
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--color-muted);
+  text-align: center;
+  max-width: 400px;
+}

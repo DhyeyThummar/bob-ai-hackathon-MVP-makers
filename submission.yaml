@@ -23,56 +23,58 @@ team:
       email: "crishmacwan.work@gmail.com"
 
 submission:
-  title: "Drug Safety Copilot: Signal Detection & Submission Readiness Checker"
+  title: "AI Smart Product Recommendation Assistant"
                             # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
 
   problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-   Pharmaceutical companies face two major challenges: detecting genuine drug safety
-    signals hidden within millions of adverse-event reports and manually checking large
-    regulatory dossiers for missing CTD sections. These processes are time-consuming,
-    error-prone, and can delay critical safety decisions and drug submissions.
+    Retail stores rely on experienced staff to guide customers through complex product
+    decisions, but expert staff are a bottleneck at scale and their knowledge disappears
+    when they leave. Customers saying "I want to build a dining table" or "I want to mount
+    my TV" do not know all the products, materials, and quantities they need — and generic
+    e-commerce filters cannot reason over product relationships the way an expert does.
 
   solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-   We built an AI-powered Drug Safety Copilot with two modes: Signal Detection, which
-    analyzes real FDA FAERS data using PRR and chi-square statistics to identify and rank
-    potential drug–event safety signals, and Submission Readiness, which checks a drug
-    dossier against ICH M4 CTD requirements and generates a completeness score and gap report.
-    IBM Bob is used throughout development for agent workflows, document understanding,
-    testing, and code generation.
+    We built a frontend-only React app that combines a Gemini 1.5 Flash LLM layer for
+    natural-language understanding with a deterministic JavaScript rules engine for reliable
+    product selection and quantity computation. The assistant asks follow-up questions,
+    reasons over a product graph, produces a complete shopping list with per-item reasoning,
+    and escalates to a human expert when confidence is low. IBM Bob was used as the primary
+    engineering tool throughout design, implementation, and documentation.
 
   key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - "Real FDA FAERS data analysis with PRR and chi-square based drug–event signal detection"
-    - "Ranked and explainable safety signals with AI-generated narrative interpretation"
-    - "ICH M4 CTD checklist-based dossier completeness scoring"
-    - "Severity-ranked submission gap report with recommended next steps"
-    - "Unified AI copilot dashboard with Signal Detection and Submission Readiness modes"
+    - "Hybrid LLM + rules + tag engine: Gemini extracts intent and slots; hardcoded rules compute quantities; tag engine makes ANY shopkeeper-added product immediately recommendable"
+    - "Shopkeeper admin module: full product CRUD with flexible key-value specs, fits-for tags, usage guide, troubleshooting guide, and bulk JSON import/export"
+    - "Budget-aware open-ended recommendations: 'decorate my room for £1000' distributes budget sensibly across product categories using tag matching"
+    - "Multi-screen app with currency personalisation: 8-currency mock exchange rate table, product detail page with specs and troubleshooting, settings, shopkeeper dashboard"
+    - "Deterministic offline fallback + human-expert escalation: all scenarios work with no API key; low-confidence requests surface a visible escalation banner with collected context"
 
   tech_stack:
-    languages: ["Python"]                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: ["Streamlit", "pandas", "scipy"]                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: ["IBM Bob", "watsonx.ai"]               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: ["SQLite", "DuckDB"]                      # e.g., ["PostgreSQL", "Redis"]
-    other: ["openFDA FAERS API", "Plotly", "pdfplumber", "python-docx", "rapidfuzz", "GitHub"]
+    languages: ["JavaScript", "JSX", "CSS"]    # REQUIRED — e.g., ["Python", "TypeScript"]
+    frameworks: ["React 18", "Vite 5", "React Router 6"]  # e.g., ["FastAPI", "React"]
+    ibm_technologies: ["IBM Bob"]              # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
+    databases: ["localStorage"]               # e.g., ["PostgreSQL", "Redis"]
+    other: ["Gemini 1.5 Flash REST API", "CSS Modules", "GitHub Actions"]
                           # e.g., ["Docker", "GitHub Actions", "Slack API"]
 
   what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Our strongest aspect is that the solution combines real-world FDA safety data with
-    explainable statistical analysis and regulatory document checking in one practical
-    copilot, rather than relying on a fabricated chatbot demo. The system provides judges
-    with both ranked safety signals and an actionable CTD gap report.
+    The hybrid engine design: the LLM handles natural language understanding while a
+    deterministic rules layer owns all product decisions and quantity calculations. This
+    makes recommendations reliable, auditable, and demo-safe — the app works correctly
+    even when the API is rate-limited. The reasoning shown per item ("Recommended because
+    you said 6-seat oak table → 2 sheets, oak veneer → danish oil finish") is what makes
+    it feel genuinely expert-like rather than a generic chatbot.
 
   known_limitations: >                 # Optional but recommended — be honest about gaps
-    The submission-readiness demonstration uses a realistic mock CTD dossier because real
-    unredacted regulatory submissions are commercially confidential. The system also
-    relies on cached FAERS data as a fallback if the public API is unavailable or
-    rate-limited during the demo.
+    The product catalog is mock data with approximate prices — not connected to a live
+    inventory system. Only four project scenarios are supported out of the box; new scenarios
+    require adding a rule file and catalog entries. No PDF export — lists export as .txt or .json.
 
 # =============================================================================
 # ARTIFACT LOCATIONS
 # These paths are relative to the repo root. Only change if you moved files.
 # =============================================================================
 artifacts:
-  source_code: "src/"
+  source_code: "src/"                      # Vite project — run: cd src && npm install && npm run dev
   setup_guide: "docs/setup-guide.md"
   architecture_doc: "docs/architecture.md"
   demo_video: "demo/demo-video-link.txt"   # URL to hosted video (YouTube, Loom, Box)

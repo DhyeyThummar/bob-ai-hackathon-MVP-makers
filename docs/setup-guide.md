@@ -1,79 +1,96 @@
 # Setup Guide
 
-> **This file is read by the automated evaluation pipeline. Be precise and complete.**
-
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
-
-- [ ] [e.g., Python 3.11+]
-- [ ] [e.g., Node.js 18+]
-- [ ] [e.g., Docker Desktop]
-- [ ] [e.g., An IBM Cloud account with watsonx.ai access]
+- **Node.js** ≥ 18.0 (check with `node --version`)
+- **npm** ≥ 9.0 (check with `npm --version`)
+- A **Gemini API key** — get one free at [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
 
 ## Environment Variables
 
-Copy `.env.example` to `.env` and fill in the values:
+The app requires one environment variable:
+
+| Variable | Description |
+|---|---|
+| `VITE_LLM_API_KEY` | Your Gemini API key |
 
 ```bash
+# Inside the src/ directory, copy the example file:
+cd src
 cp .env.example .env
+# Then edit .env and replace the placeholder with your real key:
+# VITE_LLM_API_KEY=your_actual_gemini_key_here
 ```
 
-| Variable | Description | Required |
-|---|---|---|
-| `WATSONX_API_KEY` | Your IBM watsonx.ai API key | Yes |
-| `WATSONX_PROJECT_ID` | Your watsonx.ai project ID | Yes |
-| `DATABASE_URL` | PostgreSQL connection string | Yes |
-| `SLACK_WEBHOOK_URL` | Slack webhook for alerts | No |
+> **Security note:** `.env` is already in `.gitignore`. Never commit your real API key.
 
-## Installation
+## Installation & Running
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/[your-org]/[your-repo].git
-cd [your-repo]
+git clone <repo-url>
+cd <repo-directory>
 
-# 2. Install backend dependencies
-[your command — e.g.: pip install -r requirements.txt]
+# 2. Move into the application source
+cd src
 
-# 3. Install frontend dependencies (if applicable)
-[your command — e.g.: cd frontend && npm install]
+# 3. Install dependencies
+npm install
 
-# 4. Set up the database (if applicable)
-[your command — e.g.: python manage.py migrate]
+# 4. Set up your API key (see Environment Variables above)
+cp .env.example .env
+# Edit .env and add your Gemini API key
+
+# 5. Start the development server
+npm run dev
 ```
 
-## Running the Application
+The app will open automatically at [http://localhost:5173](http://localhost:5173).
+
+## Verifying LLM Is Connected
+
+1. Open the browser console (F12 → Console tab)
+2. Type "I want to build a dining table" in the chat
+3. If the LLM is connected, you should see intent classified quickly with no `[llmService] fallback` warnings in the console
+4. If you see `[llmService] classifyIntent fallback:` warnings, the app is running in offline/fallback mode — recommendations still work but use keyword matching
+
+## Running Without an API Key (Offline / Demo Mode)
+
+The app works without a Gemini API key. Leave `VITE_LLM_API_KEY` empty or set to a dummy value:
 
 ```bash
-# Start the backend
-[your command — e.g.: uvicorn app.main:app --reload]
-
-# Start the frontend (in a separate terminal, if applicable)
-[your command — e.g.: cd frontend && npm run dev]
+VITE_LLM_API_KEY=
 ```
 
-The application will be available at: `http://localhost:[PORT]`
+All four scenarios still run end-to-end using the deterministic local fallback engine. The conversation
+will feel slightly less natural but all product recommendations, quantities, and reasoning are identical.
 
-## Running Tests
+## Building for Production
 
 ```bash
-[your test command — e.g.: pytest tests/ -v]
+cd src
+npm run build
+# Output is in src/dist/
+npm run preview  # preview production build locally
 ```
 
-## Quick Demo (Optional)
+## Quick Demo — Try These Phrases
 
-If you have a demo script or sample data to showcase the project quickly:
+| Scenario | Starter phrase |
+|---|---|
+| Dining table | "I want to build a dining table for 6 people" |
+| TV wall mount | "I need to mount my 55 inch TV on a brick wall" |
+| Living room | "I want to furnish a 20 square metre living room" |
+| Gaming PC | "Help me build a gaming PC for £1000" |
 
-```bash
-[e.g.: python demo/seed_demo_data.py]
-[e.g.: open http://localhost:8000/demo]
-```
+Each scenario will ask 1–2 follow-up questions and then produce a complete shopping list in the right panel.
 
 ## Troubleshooting
 
-| Issue | Solution |
+| Issue | Fix |
 |---|---|
-| [e.g., `ModuleNotFoundError`] | [e.g., Run `pip install -r requirements.txt` again] |
-| [e.g., Database connection refused] | [e.g., Ensure PostgreSQL is running: `docker compose up db`] |
-| [e.g., watsonx.ai 401 error] | [e.g., Check `WATSONX_API_KEY` in your `.env` file] |
+| `npm install` fails | Ensure Node.js ≥ 18. Run `node --version` to check |
+| App shows blank screen | Open browser console — check for import errors |
+| LLM returns empty responses | Verify your API key in `.env` starts with `AI` (Gemini keys do) |
+| CORS error calling Gemini | This shouldn't happen — Gemini allows browser requests. Check your key is valid |
+| localStorage full | Clear browser storage: DevTools → Application → Storage → Clear site data |

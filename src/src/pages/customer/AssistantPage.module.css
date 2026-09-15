@@ -1,0 +1,38 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.tabBarWrap {
+  flex-shrink: 0;
+}
+
+.panes {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Each pane fills the grid cell and must not overflow it */
+.pane {
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .tabBarWrap { display: none; }
+}
+
+@media (max-width: 767px) {
+  .panes { grid-template-columns: 1fr; }
+  .mobileHide { display: none; }
+  .pane { height: 100%; }
+}
